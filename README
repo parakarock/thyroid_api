@@ -1,0 +1,13 @@
+-- Run Docker Container --
+docker-compose up -d 
+
+-- Stop Docker Container --
+docker-compose down
+
+-- PHPMYADMIN User --
+User: thyroid
+Pass: 123456
+
+Database: mydb
+
+

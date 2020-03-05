@@ -1,0 +1,28 @@
+INSERT INTO `Role` (`role_id`, `role_name`, `person_id`) VALUES (NULL, 'พยาบาล', '1250100366411');
+
+
+สร้าง พร้อม กับ Patient_Summary
+INSERT INTO `User_profile` (`person_id`, `title`, `firstname`, `lastname`, `birthdate`, `gender`, `nationality`, `status`, `phone`) VALUES ('1250100366411', 'นาย', 'อิ่ม', 'มาก', '2020-03-03', 'ชาย', 'ไทย', 'โสด', '0123456789');
+INSERT INTO `Patient_Summary` (`person_id`, `rou_id`, `follow_result`, `iodine_result`) VALUES ('1250100366411', '1', NULL, NULL);
+INSERT INTO `Prepare_phase` (`person_id`, `rou_id`, `prep_date`, `method`, `appoint_time`, `period_control`, `birth_control_state`, `birth_control_time`, `last_period`, `last_period_amount`) VALUES ('1250100366411', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `Init_symp` (`person_id`, `rou_id`, `frustration`, `eat_a_lot`, `feel_hot`, `fast_heartbeat`, `shaking_hand`, `goiter`, `thyroid_lump`, `bulging_eye`, `digest_3`, `lose_weight`, `weak_arm`, `few_period`, `disease_name`) VALUES ('1250100366411', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `Thyroid_mineral_therapy` (`person_id`, `rou_id`, `therapy_1`, `therapy_2`, `therapy_3`, `therapy_4`, `therapy_5`, `therapy_6`, `therapy_7`, `therapy_8`) VALUES ('1250100366411', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `Complication_phase` (`person_id`, `rou_id`, `month`, `year`, `comp_status`, `comp_name`, `comp_anit_thy_name`, `comp_anit_thy_amount`, `comp_anit_thy_daily`, `comp_beta_name`, `comp_beta_amount`, `comp_beta_daily`, `comp_indication`) VALUES ('1250100366411', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `Mineral_history` (`person_id`, `rou_id`, `did`, `hospital`, `therapy_date`, `volume`) VALUES ('1250100366411', '1', NULL, NULL, NULL, NULL);
+INSERT INTO `Body_result` (`person_id`, `rou_id`, `sweat`, `hair_loss`, `body_weight`, `heart_rate`, `blood_pressure_upper`, `body_pressure_lower`, `eye_result`, `treatment`, `thyroid_size`, `thyroid_tumor_detect`, `thyroid_tumor_size`, `heart_lung_unusual`, `heart_lung_detail`, `trembling_hand`, `power_left_hand`, `power_right_hand`, `power_left_leg`, `power_right_leg`, `muscle_response`, `swell_shin`, `brittle_nail`, `detail`) VALUES ('1250100366411', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `Symp_phase` (`person_id`, `rou_id`, `stress`, `hard_work`, `night_work_hour`, `overtime_hour`, `sleep_less_than_4`, `pregnant`, `toxic_womb`, `smoking_amount`, `smoking_time`, `smoking_stop`, `no_risk_factor`, `relative_toxic_thyroid`, `relative_low_thyroid`) VALUES ('1250100366411', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `Thyroid_ultrasound` (`person_id`, `rou_id`, `thyroid_image`, `thyroid_advise`, `thyroid_round`, `surgury_send`) VALUES ('1250100366411', '1', NULL, NULL, NULL, NULL);
+INSERT INTO `Thyroid_scan` (`person_id`, `rou_id`, `thy_scan_image`, `thy_scan_desc`) VALUES ('1250100366411', '1', NULL, NULL);
+INSERT INTO `Hospital_send` (`person_id`, `rou_id`, `from_h_id`, `to_h_id`, `from_hn`, `to_hn`, `Hos_base_hn`) VALUES ('1250100366411', '1', NULL, NULL, NULL, NULL, '');
+
+
+
+
+
+
+
+
+
+
+
+

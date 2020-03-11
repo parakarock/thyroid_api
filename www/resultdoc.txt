@@ -1,0 +1,161 @@
+get_UTP
+{
+    "idUPT_detail": 1,
+    "person_id": "1250100366411",
+    "rou_id": 1,
+    "UPT_date": null,
+    "UPT_result": null
+}
+insert_UTP
+{
+    "idcard": "1250100366411",
+    "round": 1,
+    "UPT_date": "2020-10-25",
+    "UPT_result": "ปกติดี"
+}
+update_UTP
+{
+	"idUPT_detail": 1,
+    "idcard": "1250100366411",
+    "round": 1,
+    "UPT_date": "2020-10-25",
+    "UPT_result": "ปกติดี"
+}
+update_bodyresult1
+{
+"idcard": "1250100366411",
+"round": 1,
+"check_date": "2020-10-25",
+"sweat": "0",
+"hair_loss": "0",
+"body_weight": 165.3,
+"heart_rate": 1,
+"blood_pressure_upper": 1,
+"body_pressure_lower": 1,
+"eye_detect": "0",
+"eye_result": 1,
+"doctor_name": 1,
+"doctor_date": "2020-10-25",
+"doctor_file": "sd",
+"doctor_result": "dsd",
+"treatment": "sdsd"
+}
+get_bodyresult1
+{
+    "person_id": "1250100366411",
+    "rou_id": 1,
+    "check_date": null,
+    "sweat": null,
+    "hair_loss": null,
+    "body_weight": null,
+    "heart_rate": null,
+    "blood_pressure_upper": null,
+    "body_pressure_lower": null,
+    "eye_detect": null,
+    "eye_result": null,
+    "doctor_name": null,
+    "doctor_date": null,
+    "doctor_file": null,
+    "doctor_result": null,
+    "treatment": null
+}
+get_bodyresult2
+{
+    "person_id": "1250100366411",
+    "rou_id": 1,
+    "thyroid_size": 15.5,
+    "thyroid_tumor_detect": 0,
+    "thyroid_tumor_size": 15.5,
+    "heart_lung_unusual": 0,
+    "heart_lung_detail": "asdasd",
+    "trembling_hand": 0,
+    "power_left_hand": 1,
+    "power_right_hand": 2,
+    "power_left_leg": 3,
+    "power_right_leg": 4,
+    "swell_shin": 0,
+    "brittle_nail": 0,
+    "detail": "yhdtgd"
+}
+update_bodyresult2
+{
+	"idcard": "1250100366411",
+    "round": 1,
+	"thyroid_size": 15.5,
+	"thyroid_tumor_detect": "0",
+	"thyroid_tumor_size": "15.5",
+	"heart_lung_unusual": "0",
+	"heart_lung_detail": "asdasd",
+	"trembling_hand": "0",
+	"power_left_hand": 1,
+	"power_right_hand": 2,
+	"power_left_leg": 3,
+	"power_right_leg": 4,
+	"swell_shin": "0",
+	"brittle_nail": "0",
+	"detail": "yhdtgd"
+}
+get_thyroidScan
+{
+    "person_id": "1250100366411",
+    "rou_id": 1,
+    "thy_scan_image": null,
+    "thy_scan_desc": null
+}
+update_thyroidScan
+{
+    "idcard": "1250100366411",
+    "round": 1,
+    "thy_scan_image": "df",
+    "thy_scan_desc": "dfsfs"
+}
+get_thyroidUltraPic
+{
+    "thyroid_image": null
+}
+update_thyroidUltraPic
+{
+    "idcard": "1250100366411",
+    "round": 1,
+    "thyroid_image": "dddd"
+}
+get_thyroidUltraMass
+[
+    {
+        "thy_ult_id": 1,
+        "person_id": "1250100366411",
+        "rou_id": 1,
+        "thy_num": null,
+        "thy_size": null,
+        "thy_desc": null,
+        "thy_ult_size": null,
+        "thy_result": null
+    }
+]
+insert_thyroidUltraMass
+{
+    "idcard": "1250100366411",
+    "round": 1,
+    "thy_num": 1,
+    "thy_size": 6.5,
+    "thy_desc": "gfg",
+    "thy_ult_size": "2.5",
+    "thy_result": "fg"
+}
+update_thyroidUltraMass
+{
+	"thy_ult_id": 1,
+    "idcard": "1250100366411",
+    "round": 1,
+    "thy_num": 1,
+    "thy_size": 6.5,
+    "thy_desc": "gfg",
+    "thy_ult_size": "2.5",
+    "thy_result": "fggg"
+}
+delete_thyroidUltraMass
+{
+	"thy_ult_id": 1,
+    "idcard": "1250100366411",
+    "round": 1
+}

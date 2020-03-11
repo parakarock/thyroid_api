@@ -1,0 +1,65 @@
+get_follow
+[
+    {
+        "follow_id": 1,
+        "person_id": "1250100366411",
+        "rou_id": 1,
+        "pa_fol_date": null,
+        "pa_fol_init": null,
+        "fT4_result": null,
+        "TSH_result": null,
+        "pa_fol_anti": null,
+        "pa_fol_anti_amount": null,
+        "pa_fol_anti_daily": null,
+        "pa_fol_beta_name": null,
+        "pa_fol_bata_amount": null,
+        "pa_fol_bata_daily": null
+    }
+]
+update_follow
+ {
+        "follow_id": 1,
+        "person_id": "1250100366411",
+        "rou_id": 1,
+        "pa_fol_date": "2020-12-25",
+        "pa_fol_init": null,
+        "fT4_result": null,
+        "TSH_result": null,
+        "pa_fol_anti": null,
+        "pa_fol_anti_amount": null,
+        "pa_fol_anti_daily": null,
+        "pa_fol_beta_name": null,
+        "pa_fol_bata_amount": null,
+        "pa_fol_bata_daily": null
+    }
+insert_follow
+ {
+        "idcard": "1250100366411",
+        "round": 1,
+        "pa_fol_date": "2020-12-25",
+        "pa_fol_init": "ff",
+        "fT4_result": 2.5,
+        "TSH_result": 2.4,
+        "pa_fol_anti": "fgfg",
+        "pa_fol_anti_amount": "fgf",
+        "pa_fol_anti_daily": 2,
+        "pa_fol_beta_name": "fg",
+        "pa_fol_bata_amount": "dfgd",
+        "pa_fol_bata_daily": 5
+    }
+update_follow_result
+{
+	"idcard": "1250100366411",
+    "round": 1,
+	"follow_result": "ddddd"
+}
+update_follow_iodine
+{
+	"idcard": "1250100366411",
+    "round": 1,
+	"iodine_result": "ddddd"
+}
+insert_new_phase
+{
+	"idcard": "1250100366411"
+}

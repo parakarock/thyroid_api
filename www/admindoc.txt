@@ -1,0 +1,32 @@
+insert_hospital
+{
+	"h_id": "A123",
+"hos_name": "โรงพยาบาลชลบุรี",
+"address": "ttdfh ytjj ihkjg",
+"phone": "01234",
+"freeT3_standard": null,
+"freeT4_standard": "12.5",
+"TSH_standard": 11,
+"TRAb_standard": 150.2
+}
+update_hospital
+{
+"id": 1,
+"h_id": "A123",
+"hos_name": "โรงพยาบาลชลบุรี",
+"address": "tgfgf ihkjg",
+"phone": "01234",
+"freeT3_standard": null,
+"freeT4_standard": "12.5",
+"TSH_standard": 11,
+"TRAb_standard": 150.2
+}
+delete_hospital
+{
+"id": 1
+}
+get_hospital
+ไม่ต้องใส่
+insert_user
+
+update_user

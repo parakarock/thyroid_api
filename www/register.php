@@ -60,22 +60,48 @@ if ($role === 'nurse' && $method === 'insert_pantient') {
                         $stmt->bind_param('ss', $idCard, $idCard);
                         $error = $stmt->execute();
                         if ($error) {
-                            echo json_encode(array("result" => "OK", "username" => $idCard, "password" => $idCard));
+                            $row = $result->fetch_assoc();
+                            $sql = "SELECT person_id,concat(title,firstname,' ',lastname) as fullname ,gender FROM User_profile WHERE person_id = ? ";
+    	                    $stmt = $conn->prepare($sql);
+    	                    $stmt->bind_param('s', $idCard);
+    	                    $stmt->execute();
+    	                    $result1 = $stmt->get_result();
+
+		                    $sql = "SELECT rou_id FROM Patient_Summary WHERE person_id = ?";
+    	                    $stmt = $conn->prepare($sql);
+    	                    $stmt->bind_param('s', $idCard);
+    	                    $stmt->execute();
+    	                    $result2 = $stmt->get_result();
+    	                    $resultArray1 = array();
+		                    $resultArray2 = array();
+                        if ($result1->num_rows > 0 && $result2->num_rows > 0) {
+                            while ($row = $result1->fetch_assoc()) {
+                                array_push($resultArray1, $row);
+                            }
+                            while ($row = $result2->fetch_assoc()) {
+                                array_push($resultArray2, $row);
+                            }
+		                        array_push($resultArray1, $resultArray2);
+                                array_push($resultArray1, array("username" => $idCard, "password" => $idCard));
+                                echo json_encode($resultArray1);
                         } else {
-                            echo json_encode(array("result" => "Fail"));
+                            echo json_encode(array("result" => "ไม่พบข้อมูล"));
+                        }
+                        } else {
+                            echo json_encode(array("result" => "Fail5"));
                         }
                     } else {
-                        echo json_encode(array("result" => "Fail"));
+                        echo json_encode(array("result" => "Fail4"));
                     }
 
                 } else {
-                    echo json_encode(array("result" => "Fail"));
+                    echo json_encode(array("result" => "Fail3"));
                 }
             } else {
-                echo json_encode(array("result" => "Fail"));
+                echo json_encode(array("result" => "Fail2"));
             }
         } else {
-            echo json_encode(array("result" => "Fail"));
+            echo json_encode(array("result" => "Fail1"));
         }
     }
 }

@@ -44,10 +44,108 @@ if ($role === 'guest' && $method === 'login') {
             array_push($resultArray1,$resultArray2);
             echo json_encode($resultArray1);
         } else {
-            echo json_encode(array("result" => "Invalid Data of ` $username`"));
+            echo json_encode(array("result" => "รหัสบัตรประชาชนหรือรหัสผ่านไม่ถูกต้อง"));
         }
     } else {
-        echo json_encode(array("result" => "Your username or password is wrong!"));
+        echo json_encode(array("result" => "รหัสบัตรประชาชนหรือรหัสผ่านไม่ถูกต้อง"));
     }
 
 }
+
+
+if (($role === 'ผู้ป่วย' || $role === 'หมอ'|| $role === 'พยาบาล'|| $role === 'แอดมิน')&& $method === 'changePassTab') {
+    $postdata = file_get_contents("php://input");
+    $data = json_decode($postdata);
+    $username = $data->idcard;
+    $oldpass = $data->oldpass;
+    $newpass = $data->newpass;
+    $sql = "SELECT * FROM Authen WHERE username = ? ";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('s',  $username);
+    $error = $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        if($row['password'] === $oldpass){
+            $sql = "UPDATE Authen SET password=? WHERE username=?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('ss',$newpass ,$username );
+            $error = $stmt->execute();
+            if ($error) {
+                echo json_encode(array("username" => $username, "password" => $newpass));
+            } else {
+                echo json_encode(array("result" => "Fail"));
+            }
+        }else{
+            echo json_encode(array("result" => "รหัสผ่านเดิมไม่ตรงกัน"));
+        }
+        
+    } else {
+        echo json_encode(array("result" => "ไม่พบข้อมูลผู้ใช้งาน"));
+    }
+
+}
+
+if ($role === 'guest' && $method === 'changePassLogin1') {
+    $postdata = file_get_contents("php://input");
+    $data = json_decode($postdata);
+    $person_id = $data->person_id;
+    $birthdate = $data->birthdate;
+    $sql = "SELECT * FROM User_profile WHERE person_id = ? AND birthdate = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('ss',  $person_id,$birthdate);
+    $error = $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        echo json_encode(array("result" => "Ok"));
+    } else {
+        echo json_encode(array("result" => "ไม่พบข้อมูลผู้ใช้งาน"));
+    }
+
+}
+
+if (($role === 'guest' )&& $method === 'changePassLogin2') {
+    $postdata = file_get_contents("php://input");
+    $data = json_decode($postdata);
+    $person_id = $data->person_id;
+    $newpass = $data->newpass;
+    $sql = "UPDATE Authen SET password=? WHERE username=?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('ss',$newpass ,$person_id );
+    $error = $stmt->execute();
+    if ($error) {
+        echo json_encode(array("username" => $person_id, "password" => $newpass));
+    } else {
+        echo json_encode(array("result" => "Fail"));
+    }
+
+}
+
+if (($role === 'ผู้ป่วย' )&& $method === 'getRounds') {
+    $postdata = file_get_contents("php://input");
+    $data = json_decode($postdata);
+    $person_id = $data->person_id;
+    $sql = "SELECT rou_id FROM Patient_Summary WHERE person_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('s',$person_id);
+    $error = $stmt->execute();
+    $result = $stmt->get_result();
+    $resultArray = array();
+    if ($error) {
+        if ($result->num_rows > 0) {
+            $count = $result->num_rows;
+            while ($row = $result->fetch_assoc()) {
+                array_push($resultArray, $row);
+            }
+            echo json_encode($resultArray);
+        } else {
+            echo json_encode(array("result" => "Invalid Data of `$idCard`"));
+        }
+    } else {
+        echo json_encode(array("result" => "Fail"));
+    }
+
+}
+
+
+

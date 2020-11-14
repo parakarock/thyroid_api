@@ -7,12 +7,12 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: *');
 header("Content-type: application/json; charset=UTF-8");
 
-if (($role === 'patient' || $role === 'doctor') && $method === 'get_labtest') {
+if (($role === 'ผู้ป่วย' || $role === 'หมอ'|| $role === 'พยาบาล') && $method === 'get_labtest') {
     $postdata = file_get_contents("php://input");
     $data = json_decode($postdata);
     $idCard = $data->idcard;
     $round = $data->round;
-    $sql = "SELECT * FROM Lab_test WHERE person_id = ? AND rou_id = ?";
+    $sql = "SELECT * FROM Lab_test WHERE person_id = ? AND rou_id = ? ORDER BY id_test DESC";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param('si', $idCard, $round);
     $error = $stmt->execute();
@@ -20,12 +20,15 @@ if (($role === 'patient' || $role === 'doctor') && $method === 'get_labtest') {
     $resultArray = array();
     if ($error) {
         if ($result->num_rows > 0) {
+            $count = $result->num_rows;
             while ($row = $result->fetch_assoc()) {
+                $row["index"] = $count;
                 array_push($resultArray, $row);
+                $count--;
             }
             echo json_encode($resultArray);
         } else {
-            echo json_encode(array("result" => "Invalid Data of `$idCard`"));
+            echo json_encode(array("result" => "ไม่พบข้อมูล `$idCard`"));
         }
     } else {
         echo json_encode(array("result" => "Fail"));
@@ -33,7 +36,7 @@ if (($role === 'patient' || $role === 'doctor') && $method === 'get_labtest') {
 
 }
 
-if ($role === 'nurse' && $method === 'update_labtest') {
+if ($role === 'พยาบาล' && $method === 'update_labtest') {
     $postdata = file_get_contents("php://input");
     $data = json_decode($postdata);
     $id_test = $data->id_test;
@@ -61,14 +64,14 @@ if ($role === 'nurse' && $method === 'update_labtest') {
     $stmt->bind_param('dsdddddddssddsiii', $t3, $hospital, $t4, $tsh, $trab, $t3stan, $t4stan, $tshstan, $trabstan, $antiname, $betaname, $antiamount, $betaamount, $labdate, $antidaily, $betadaily,$id_test);
     $error = $stmt->execute();
     if ($error) {
-        echo json_encode(array("result" => "OK"));
+        echo json_encode(array("result" => "ดำเนินการบันทึกข้อมูลเสร็จสิ้น"));
     } else {
         echo json_encode(array("result" => "Fail"));
     }
 
 }
 
-if ($role === 'nurse' && $method === 'insert_labtest') {
+if ($role === 'พยาบาล' && $method === 'insert_labtest') {
     $postdata = file_get_contents("php://input");
     $data = json_decode($postdata);
     $idCard = $data->idcard;
@@ -97,7 +100,7 @@ if ($role === 'nurse' && $method === 'insert_labtest') {
     $stmt->bind_param('sidsdddddddssddsii', $idCard, $round, $t3, $hospital, $t4, $tsh, $trab, $t3stan, $t4stan, $tshstan, $trabstan, $antiname, $betaname, $antiamount, $betaamount, $labdate, $antidaily, $betadaily);
     $error = $stmt->execute();
     if ($error) {
-        echo json_encode(array("result" => "OK"));
+        echo json_encode(array("result" => "ดำเนินการบันทึกข้อมูลเสร็จสิ้น"));
     } else {
         echo json_encode(array("result" => "Fail"));
     }

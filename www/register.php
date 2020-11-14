@@ -8,7 +8,7 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: *');
 header("Content-type: application/json; charset=UTF-8");
 
-if ($role === 'nurse' && $method === 'insert_pantient') {
+if ($role === 'พยาบาล' && $method === 'insert_pantient') {
     $postdata = file_get_contents("php://input");
     $data = json_decode($postdata);
     $idCard = $data->idcard;
@@ -22,7 +22,7 @@ if ($role === 'nurse' && $method === 'insert_pantient') {
     $phone = $data->phone;
     $from_id = $data->from_id;
     $to_id = $data->to_id;
-    $Hos_base_h_id = $data->Hos_base_id;
+    $Hos_base_h_id = $data->Hos_base_h_id;
     $from_name = $data->from_name;
     $to_name = $data->to_name;
     $sql = "SELECT * FROM User_profile WHERE person_id = ? ";
@@ -44,14 +44,14 @@ if ($role === 'nurse' && $method === 'insert_pantient') {
             $stmt->bind_param('s', $idCard);
             $error = $stmt->execute();
             if ($error) {
-                $sql = "INSERT INTO Patient_Summary (person_id,rou_id,follow_result,iodine_result) VALUES (?,'1',NULL,NULL)";
+                $sql = "INSERT INTO Patient_Summary (person_id,rou_id) VALUES (?,'1')";
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param('s', $idCard);
                 $error = $stmt->execute();
                 if ($error) {
-                    $sql = "UPDATE Hospital_send SET from_h_id = ?, to_h_id =?, Hos_base_h_id=? , from_hn = ?, to_hn = ?, Hos_base_hn = 'โรงพยาบาลบูรพา' WHERE person_id = ? AND rou_id ='1' ";
+                    $sql = "UPDATE Hospital_send SET from_h_id = ?, to_h_id =?, Hos_base_h_id=? , from_hn = ?, to_hn = ?, Hos_base_hn = 'โรงพยาบาลมหาวิทยาลัยบูรพา' WHERE person_id = ? AND rou_id ='1' ";
                     $stmt = $conn->prepare($sql);
-                    $stmt->bind_param('ssssss', $from_id , $to_id ,$Hos_base_id, $from_name , $to_name , $idCard );
+                    $stmt->bind_param('ssssss', $from_id , $to_id ,$Hos_base_h_id, $from_name , $to_name , $idCard );
                     $error = $stmt->execute();
                     if ($error) {
                         $sql = "INSERT INTO Authen (username,password) VALUES (?,?)";

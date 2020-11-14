@@ -8,7 +8,7 @@ header('Access-Control-Allow-Headers: *');
 header("Content-type: application/json; charset=UTF-8");
 
 // ขอข้อมูล profile เรียก get_profile ส่ง role
-if (($role === 'nurse' || $role === 'patient' || $role === 'doctor') && $method === 'get_profile') {
+if (($role === 'พยาบาล' || $role === 'ผู้ป่วย' || $role === 'หมอ') && $method === 'get_profile') {
     $postdata = file_get_contents("php://input");
     $data = json_decode($postdata);
     $idCard = $data->idcard;
@@ -39,7 +39,7 @@ if (($role === 'nurse' || $role === 'patient' || $role === 'doctor') && $method 
     }
 }
 
-if (($role === 'nurse' || $role === 'admin') && $method === 'update_profile') {
+if ($role === 'พยาบาล'  && $method === 'update_profile') {
     $postdata = file_get_contents("php://input");
     $data = json_decode($postdata);
     $idCard = $data->idcard;
@@ -64,10 +64,10 @@ if (($role === 'nurse' || $role === 'admin') && $method === 'update_profile') {
     if ($error) {
         $sql = "UPDATE Hospital_send SET from_h_id = ?, to_h_id =?, Hos_base_h_id=? , from_hn = ?, to_hn = ? WHERE person_id = ? AND rou_id ='1' ";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('ssssss', $from_id, $to_id, $Hos_base_id, $from_name, $to_name, $idCard);
+        $stmt->bind_param('ssssss', $from_id, $to_id, $Hos_base_h_id, $from_name, $to_name, $idCard);
         $error = $stmt->execute();
         if ($error) {
-            echo json_encode(array("result" => "Update profile Success.."));
+            echo json_encode(array("result" => "ดำเนินการบันทึกข้อมูลเสร็จสิ้น"));
         } else {
             echo json_encode(array("result" => "Fail"));
         }
@@ -76,7 +76,7 @@ if (($role === 'nurse' || $role === 'admin') && $method === 'update_profile') {
     }
 }
 
-if (($role === 'nurse' || $role === 'patient' || $role === 'doctor') && $method === 'get_init-phase') {
+if (($role === 'พยาบาล' || $role === 'ผู้ป่วย' || $role === 'หมอ') && $method === 'get_init-phase') {
     $postdata = file_get_contents("php://input");
     $data = json_decode($postdata);
     $idCard = $data->idcard;
@@ -94,7 +94,7 @@ if (($role === 'nurse' || $role === 'patient' || $role === 'doctor') && $method 
     }
 }
 
-if ($role === 'nurse' && $method === 'update_init-phase') {
+if ($role === 'พยาบาล' && $method === 'update_init-phase') {
     $postdata = file_get_contents("php://input");
     $data = json_decode($postdata);
     $idCard = $data->idcard;
@@ -102,6 +102,7 @@ if ($role === 'nurse' && $method === 'update_init-phase') {
 
     $frustration = $data->frustration;
     $eat_a_lot = $data->eat_a_lot;
+    $hard_sleep = $data->hard_sleep;
     $feel_hot = $data->feel_hot;
     $fast_heartbeat = $data->fast_heartbeat;
     $shaking_hand = $data->shaking_hand;
@@ -114,18 +115,18 @@ if ($role === 'nurse' && $method === 'update_init-phase') {
     $few_period = $data->few_period;
     $disease_name = $data->disease_name;
 
-    $sql = "UPDATE Init_symp SET frustration = ?, eat_a_lot = ?, feel_hot = ?, fast_heartbeat = ?, shaking_hand = ?, goiter = ?, thyroid_lump = ?, bulging_eye = ?, digest_3 = ?, lose_weight = ?, weak_arm = ?, few_period = ?, disease_name = ? WHERE person_id = ? AND rou_id = ?";
+    $sql = "UPDATE Init_symp SET frustration = ?, hard_sleep =?, eat_a_lot = ?, feel_hot = ?, fast_heartbeat = ?, shaking_hand = ?, goiter = ?, thyroid_lump = ?, bulging_eye = ?, digest_3 = ?, lose_weight = ?, weak_arm = ?, few_period = ?, disease_name = ? WHERE person_id = ? AND rou_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('ssssssssssssssi', $frustration, $eat_a_lot, $feel_hot, $fast_heartbeat, $shaking_hand, $goiter, $thyroid_lump, $bulging_eye, $digest_3, $lose_weight, $weak_arm, $few_period, $disease_name, $idCard, $round);
+    $stmt->bind_param('sssssssssssssssi', $frustration, $hard_sleep, $eat_a_lot, $feel_hot, $fast_heartbeat, $shaking_hand, $goiter, $thyroid_lump, $bulging_eye, $digest_3, $lose_weight, $weak_arm, $few_period, $disease_name, $idCard, $round);
     $error = $stmt->execute();
     if ($error) {
-        echo json_encode(array("result" => "Update init-phase Success.."));
+        echo json_encode(array("result" => "ดำเนินการบันทึกข้อมูลเสร็จสิ้น"));
     } else {
         echo json_encode(array("result" => $error->error_reporting));
     }
 }
 
-if (($role === 'nurse' || $role === 'patient' || $role === 'doctor') && $method === 'get_sym-phase') {
+if (($role === 'พยาบาล' || $role === 'ผู้ป่วย' || $role === 'หมอ') && $method === 'get_sym-phase') {
     $postdata = file_get_contents("php://input");
     $data = json_decode($postdata);
     $idCard = $data->idcard;
@@ -143,7 +144,7 @@ if (($role === 'nurse' || $role === 'patient' || $role === 'doctor') && $method 
     }
 }
 
-if ($role === 'nurse' && $method === 'update_sym-phase') {
+if ($role === 'พยาบาล' && $method === 'update_sym-phase') {
     $postdata = file_get_contents("php://input");
     $data = json_decode($postdata);
     $idCard = $data->idcard;
@@ -155,27 +156,28 @@ if ($role === 'nurse' && $method === 'update_sym-phase') {
     $overtime_hour = $data->overtime_hour;
     $sleep_less_than_4 = $data->sleep_less_than_4;
     $pregnant = $data->pregnant;
-    $toxic_womb = $data->toxic_womb;
     $smoking_amount = $data->smoking_amount;
+    $select_amount = $data->select_amount;
     $smoking_time = $data->smoking_time;
+    $select_time = $data->select_time;
     $smoking_stop = $data->smoking_stop;
+    $select_stop = $data->select_stop;
     $no_risk_factor = $data->no_risk_factor;
     $relative_toxic_thyroid = $data->relative_toxic_thyroid;
-    $relative_low_thyroid = $data->relative_low_thyroid;
 
-    $sql = "UPDATE Symp_phase SET stress = ?, hard_work = ?, night_work_hour = ?, overtime_hour = ?, sleep_less_than_4 = ?, pregnant = ?, toxic_womb = ?, smoking_amount = ?, smoking_time = ?, smoking_stop = ?, no_risk_factor = ?, relative_toxic_thyroid = ?, relative_low_thyroid = ? WHERE person_id = ? AND rou_id = ?";
+    $sql = "UPDATE Symp_phase SET stress = ?, hard_work = ?, night_work_hour = ?, overtime_hour = ?, sleep_less_than_4 = ?, pregnant = ?, smoking_amount = ?, select_amount = ?, smoking_time = ?, select_time = ?, smoking_stop = ?, select_stop = ?, no_risk_factor = ?, relative_toxic_thyroid = ? WHERE person_id = ? AND rou_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('ssddsssdddssssi', $stress, $hard_work, $night_work_hour, $overtime_hour, $sleep_less_than_4, $pregnant, $toxic_womb, $smoking_amount, $smoking_time, $smoking_stop, $no_risk_factor, $relative_toxic_thyroid, $relative_low_thyroid, $idCard, $round);
+    $stmt->bind_param('ssddssdsdsdssssi', $stress, $hard_work, $night_work_hour, $overtime_hour, $sleep_less_than_4, $pregnant, $smoking_amount, $select_amount, $smoking_time, $select_time, $smoking_stop, $select_stop, $no_risk_factor, $relative_toxic_thyroid, $idCard, $round);
     $error = $stmt->execute();
     if ($error) {
-        echo json_encode(array("result" => "Update sym-phase Success.."));
+        echo json_encode(array("result" => "ดำเนินการบันทึกข้อมูลเสร็จสิ้น"));
     } else {
         echo json_encode(array("result" => $error->error_reporting));
     }
 
 }
 
-if (($role === 'nurse' || $role === 'patient' || $role === 'doctor') && $method === 'get_mineral_therapy') {
+if (($role === 'พยาบาล' || $role === 'ผู้ป่วย' || $role === 'หมอ') && $method === 'get_mineral_therapy') {
     $postdata = file_get_contents("php://input");
     $data = json_decode($postdata);
     $idCard = $data->idcard;
@@ -193,7 +195,7 @@ if (($role === 'nurse' || $role === 'patient' || $role === 'doctor') && $method 
     }
 }
 
-if ($role === 'nurse' && $method === 'update_mineral_therapy') {
+if ($role === 'พยาบาล' && $method === 'update_mineral_therapy') {
     $postdata = file_get_contents("php://input");
     $data = json_decode($postdata);
     $idCard = $data->idcard;
@@ -213,13 +215,13 @@ if ($role === 'nurse' && $method === 'update_mineral_therapy') {
     $stmt->bind_param('sssssssssi', $therapy_1, $therapy_2, $therapy_3, $therapy_4, $therapy_5, $therapy_6, $therapy_7, $therapy_8, $idCard, $round);
     $error = $stmt->execute();
     if ($error) {
-        echo json_encode(array("result" => "Update mineral_therapy Success.."));
+        echo json_encode(array("result" => "ดำเนินการบันทึกข้อมูลเสร็จสิ้น"));
     } else {
         echo json_encode(array("result" => $error->error_reporting));
     }
 }
 
-if (($role === 'nurse' || $role === 'patient' || $role === 'doctor') && $method === 'get_mineral_history') {
+if (($role === 'พยาบาล' || $role === 'ผู้ป่วย' || $role === 'หมอ') && $method === 'get_mineral_history') {
     $postdata = file_get_contents("php://input");
     $data = json_decode($postdata);
     $idCard = $data->idcard;
@@ -237,7 +239,7 @@ if (($role === 'nurse' || $role === 'patient' || $role === 'doctor') && $method 
     }
 }
 
-if ($role === 'nurse' && $method === 'update_mineral_history') {
+if ($role === 'พยาบาล' && $method === 'update_mineral_history') {
     $postdata = file_get_contents("php://input");
     $data = json_decode($postdata);
     $idCard = $data->idcard;
@@ -253,13 +255,13 @@ if ($role === 'nurse' && $method === 'update_mineral_history') {
     $stmt->bind_param('sssdsi', $did, $hospital, $therapy_date, $volume, $idCard, $round);
     $error = $stmt->execute();
     if ($error) {
-        echo json_encode(array("result" => "Update mineral_history Success.."));
+        echo json_encode(array("result" => "ดำเนินการบันทึกข้อมูลเสร็จสิ้น"));
     } else {
         echo json_encode(array("result" => "Fail"));
     }
 }
 
-if (($role === 'patient' || $role === 'doctor') && $method === 'get_complication') {
+if (($role === 'ผู้ป่วย' || $role === 'หมอ') && $method === 'get_complication') {
     $postdata = file_get_contents("php://input");
     $data = json_decode($postdata);
     $idCard = $data->idcard;
@@ -277,7 +279,7 @@ if (($role === 'patient' || $role === 'doctor') && $method === 'get_complication
     }
 }
 
-if ($role === 'doctor' && $method === 'update_complication') {
+if ($role === 'หมอ' && $method === 'update_complication') {
     $postdata = file_get_contents("php://input");
     $data = json_decode($postdata);
     $idCard = $data->idcard;
@@ -286,7 +288,6 @@ if ($role === 'doctor' && $method === 'update_complication') {
     $month = $data->month;
     $year = $data->year;
     $comp_status = $data->comp_status;
-    $comp_name = $data->comp_name;
     $comp_anit_thy_name = $data->comp_anit_thy_name;
     $comp_anit_thy_amount = $data->comp_anit_thy_amount;
     $comp_anit_thy_daily = $data->comp_anit_thy_daily;
@@ -295,12 +296,12 @@ if ($role === 'doctor' && $method === 'update_complication') {
     $comp_beta_daily = $data->comp_beta_daily;
     $comp_indication = $data->comp_indication;
 
-    $sql = "UPDATE Complication_phase SET month = ?, year = ?, comp_status = ?, comp_name = ?, comp_anit_thy_name = ?, comp_anit_thy_amount = ?, comp_anit_thy_daily = ?, comp_beta_name = ?, comp_beta_amount = ?, comp_beta_daily = ?, comp_indication = ? WHERE person_id = ? AND rou_id = ?";
+    $sql = "UPDATE Complication_phase SET month = ?, year = ?, comp_status = ?, comp_anit_thy_name = ?, comp_anit_thy_amount = ?, comp_anit_thy_daily = ?, comp_beta_name = ?, comp_beta_amount = ?, comp_beta_daily = ?, comp_indication = ? WHERE person_id = ? AND rou_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('ssssssssssssi', $month, $year, $comp_status, $comp_name, $comp_anit_thy_name, $comp_anit_thy_amount, $comp_anit_thy_daily, $comp_beta_name, $comp_beta_amount, $comp_beta_daily, $comp_indication, $idCard, $round);
+    $stmt->bind_param('ssssddsddssi', $month, $year, $comp_status, $comp_anit_thy_name, $comp_anit_thy_amount, $comp_anit_thy_daily, $comp_beta_name, $comp_beta_amount, $comp_beta_daily, $comp_indication, $idCard, $round);
     $error = $stmt->execute();
     if ($error) {
-        echo json_encode(array("result" => "Update complication Success.."));
+        echo json_encode(array("result" => "ดำเนินการบันทึกข้อมูลเสร็จสิ้น"));
     } else {
         echo json_encode(array("result" => $error->error_reporting));
     }

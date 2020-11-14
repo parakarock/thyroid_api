@@ -7,7 +7,7 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: *');
 header("Content-type: application/json; charset=UTF-8");
 
-if (($role === 'patient' || $role === 'doctor') && $method === 'get_bodyresult1') {
+if (($role === 'ผู้ป่วย' || $role === 'หมอ') && $method === 'get_bodyresult1') {
     $postdata = file_get_contents("php://input");
     $data = json_decode($postdata);
     $idCard = $data->idcard;
@@ -25,19 +25,18 @@ if (($role === 'patient' || $role === 'doctor') && $method === 'get_bodyresult1'
     }
 }
 
-if ($role === 'doctor' && $method === 'update_bodyresult1') {
+if ($role === 'หมอ' && $method === 'update_bodyresult1') {
     $postdata = file_get_contents("php://input");
     $data = json_decode($postdata);
     $idCard = $data->idcard;
     $round = $data->round;
-
     $check_date = $data->check_date;
     $sweat = $data->sweat;
     $hair_loss = $data->hair_loss;
     $body_weight = $data->body_weight;
     $heart_rate = $data->heart_rate;
     $blood_pressure_upper = $data->blood_pressure_upper;
-    $body_pressure_lower = $data->body_pressure_lower;
+    $blood_pressure_lower = $data->blood_pressure_lower;
     $eye_detect = $data->eye_detect;
     $eye_result = $data->eye_result;
     $doctor_name = $data->doctor_name;
@@ -46,18 +45,18 @@ if ($role === 'doctor' && $method === 'update_bodyresult1') {
     $doctor_result = $data->doctor_result;
     $treatment = $data->treatment;
 
-    $sql = "UPDATE Body_result1 SET check_date = ?, sweat = ?, hair_loss = ?, body_weight = ?, heart_rate = ?, blood_pressure_upper = ?, body_pressure_lower = ?, eye_detect = ?, eye_result = ?, doctor_name = ?, doctor_date = ?, doctor_file = ?, doctor_result = ?, treatment = ? WHERE person_id = ? AND rou_id = ?";
+    $sql = "UPDATE Body_result1 SET check_date = ?, sweat = ?, hair_loss = ?, body_weight = ?, heart_rate = ?, blood_pressure_upper = ?, blood_pressure_lower = ?, eye_detect = ?, eye_result = ?, doctor_name = ?, doctor_date = ?, doctor_file = ?, doctor_result = ?, treatment = ? WHERE person_id = ? AND rou_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('ssssdddssssssssi', $check_date, $sweat, $hair_loss, $body_weight, $heart_rate, $blood_pressure_upper, $body_pressure_lower, $eye_detect, $eye_result, $doctor_name, $doctor_date, $doctor_file, $doctor_result, $treatment, $idCard, $round);
+    $stmt->bind_param('sssddddssssssssi', $check_date, $sweat, $hair_loss, $body_weight, $heart_rate, $blood_pressure_upper, $blood_pressure_lower, $eye_detect, $eye_result, $doctor_name, $doctor_date, $doctor_file, $doctor_result, $treatment, $idCard, $round);
     $error = $stmt->execute();
     if ($error) {
-        echo json_encode(array("result" => "Update bodyresult1 Success.."));
+        echo json_encode(array("result" => "บันทึกข้อมูลเสร็จสมบูรณ์"));
     } else {
         echo json_encode(array("result" => "Fail"));
     }
 }
 
-if (($role === 'patient' || $role === 'doctor') && $method === 'get_bodyresult2') {
+if (($role === 'ผู้ป่วย' || $role === 'หมอ') && $method === 'get_bodyresult2') {
     $postdata = file_get_contents("php://input");
     $data = json_decode($postdata);
     $idCard = $data->idcard;
@@ -75,7 +74,7 @@ if (($role === 'patient' || $role === 'doctor') && $method === 'get_bodyresult2'
     }
 }
 
-if ($role === 'doctor' && $method === 'update_bodyresult2') {
+if ($role === 'หมอ' && $method === 'update_bodyresult2') {
     $postdata = file_get_contents("php://input");
     $data = json_decode($postdata);
     $idCard = $data->idcard;
@@ -100,13 +99,13 @@ if ($role === 'doctor' && $method === 'update_bodyresult2') {
     $stmt->bind_param('dsdsssiiiissssi', $thyroid_size, $thyroid_tumor_detect, $thyroid_tumor_size, $heart_lung_unusual, $heart_lung_detail, $trembling_hand, $power_left_hand, $power_right_hand, $power_left_leg, $power_right_leg, $swell_shin, $brittle_nail, $detail, $idCard, $round);
     $error = $stmt->execute();
     if ($error) {
-        echo json_encode(array("result" => "Update bodyresult2 Success.."));
+        echo json_encode(array("result" => "บันทึกข้อมูลเสร็จสมบูรณ์"));
     } else {
         echo json_encode(array("result" => "Fail"));
     }
 }
 
-if (($role === 'patient' || $role === 'doctor') && $method === 'get_thyroidScan') {
+if (($role === 'ผู้ป่วย' || $role === 'หมอ') && $method === 'get_thyroidScan') {
     $postdata = file_get_contents("php://input");
     $data = json_decode($postdata);
     $idCard = $data->idcard;
@@ -124,13 +123,13 @@ if (($role === 'patient' || $role === 'doctor') && $method === 'get_thyroidScan'
     }
 }
 
-if ($role === 'doctor' && $method === 'update_thyroidScan') {
+if ($role === 'หมอ' && $method === 'update_thyroidScan') {
     $postdata = file_get_contents("php://input");
     $data = json_decode($postdata);
     $idCard = $data->idcard;
     $round = $data->round;
+	$uploadOk = 1;
 
-    $did = $data->did;
     $thy_scan_image = $data->thy_scan_image;
     $thy_scan_desc = $data->thy_scan_desc;
 
@@ -139,18 +138,18 @@ if ($role === 'doctor' && $method === 'update_thyroidScan') {
     $stmt->bind_param('sssi', $thy_scan_image, $thy_scan_desc, $idCard, $round);
     $error = $stmt->execute();
     if ($error) {
-        echo json_encode(array("result" => "Update thyroidScan Success.."));
+        echo json_encode(array("$thy_scan_image"));
     } else {
         echo json_encode(array("result" => "Fail"));
     }
 }
 
-if (($role === 'patient' || $role === 'doctor') && $method === 'get_thyroidUltraPic') {
+if (($role === 'ผู้ป่วย' || $role === 'หมอ') && $method === 'get_thyroidUltraPic') {
     $postdata = file_get_contents("php://input");
     $data = json_decode($postdata);
     $idCard = $data->idcard;
     $round = $data->round;
-    $sql = "SELECT thyroid_image FROM Thyroid_ultrasound WHERE person_id = ? AND rou_id = ?";
+    $sql = "SELECT * FROM Thyroid_ultrasound WHERE person_id = ? AND rou_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param('si', $idCard, $round);
     $stmt->execute();
@@ -163,26 +162,27 @@ if (($role === 'patient' || $role === 'doctor') && $method === 'get_thyroidUltra
     }
 }
 
-if ($role === 'doctor' && $method === 'update_thyroidUltraPic') {
+if ($role === 'หมอ' && $method === 'update_thyroidUltraPic') {
     $postdata = file_get_contents("php://input");
     $data = json_decode($postdata);
     $idCard = $data->idcard;
     $round = $data->round;
 
     $thyroid_image = $data->thyroid_image;
+    $thy_ult_result = $data->thy_ult_result;
 
-    $sql = "UPDATE Thyroid_ultrasound SET thyroid_image = ? WHERE person_id = ? AND rou_id = ?";
+    $sql = "UPDATE Thyroid_ultrasound SET thyroid_image = ?, thy_ult_result = ? WHERE person_id = ? AND rou_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('ssi', $thyroid_image, $idCard, $round);
+    $stmt->bind_param('sssi', $thyroid_image, $thy_ult_result, $idCard, $round);
     $error = $stmt->execute();
     if ($error) {
-        echo json_encode(array("result" => "Update thyroidUltraPic Success.."));
+        echo json_encode(array($thyroid_image));
     } else {
         echo json_encode(array("result" => "Fail"));
     }
 }
 
-if (($role === 'patient' || $role === 'doctor') && $method === 'get_thyroidUltraMass') {
+if (($role === 'ผู้ป่วย' || $role === 'หมอ') && $method === 'get_thyroidUltraMass') {
     $postdata = file_get_contents("php://input");
     $data = json_decode($postdata);
     $idCard = $data->idcard;
@@ -204,30 +204,49 @@ if (($role === 'patient' || $role === 'doctor') && $method === 'get_thyroidUltra
         }
     } else {
         echo json_encode(array("result" => "Faildsd"));
-    }
+    } 
 }
 
-if ($role === 'doctor' && $method === 'insert_thyroidUltraMass') {
+if ($role === 'หมอ' && $method === 'insert_thyroidUltraMass') {
     $postdata = file_get_contents("php://input");
     $data = json_decode($postdata);
     $idCard = $data->idcard;
     $round = $data->round;
     $thy_num = $data->thy_num;
-    $thy_size = $data->thy_size;
-    $thy_desc = $data->thy_desc;
-    $thy_ult_size = $data->thy_ult_size;
-    $thy_result = $data->thy_result;
-    $sql = "INSERT INTO Thyroid_ult_detail (thy_ult_id ,person_id,rou_id,thy_num,thy_size,thy_desc,thy_ult_size,thy_result) VALUES (NULL,?,?,?,?,?,?,?)";
+    $thy_ult_date = $data->thy_ult_date;
+    $thy_ult_advice = $data->thy_ult_advice;
+    $thy_ult_follow_num = $data->thy_ult_follow_num;
+    $thy_ult_follow_unit = $data->thy_ult_follow_unit;
+    $thy_ult_fine_result = $data->thy_ult_fine_result;
+    $thy_ult_surgury_desc = $data->thy_ult_surgury_desc;
+
+    $sql = "SELECT * FROM Thyroid_ult_detail WHERE person_id = ? AND rou_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('siidsds', $idCard, $round, $thy_num, $thy_size, $thy_desc, $thy_ult_size, $thy_result);
-    $error = $stmt->execute();if ($error) {
+    $stmt->bind_param('si', $idCard, $round);
+    $error=$stmt->execute();
+    $result = $stmt->get_result();
+
+    $sql = "INSERT INTO Thyroid_ult_detail (person_id, rou_id, thy_num, thy_ult_date, thy_ult_advice, thy_ult_follow_num, thy_ult_follow_unit, thy_ult_fine_result, thy_ult_surgury_desc) 
+            VALUES (?,?,?,?,?,?,?,?,?)
+            ON DUPLICATE KEY UPDATE 
+            thy_ult_date = VALUES(thy_ult_date),
+            thy_ult_advice = VALUES(thy_ult_advice), 
+            thy_ult_follow_num = VALUES(thy_ult_follow_num), 
+            thy_ult_follow_unit = VALUES(thy_ult_follow_unit), 
+            thy_ult_fine_result = VALUES(thy_ult_fine_result), 
+            thy_ult_surgury_desc = VALUES(thy_ult_surgury_desc)";
+            
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('sisssssss', $idCard, $round, $thy_num, $thy_ult_date, $thy_ult_advice, $thy_ult_follow_num, $thy_ult_follow_unit, $thy_ult_fine_result, $thy_ult_surgury_desc);
+    $error = $stmt->execute();
+    if ($error) {
         echo json_encode(array("result" => "Insert thyroidUltraMass Success..."));
     } else {
         echo json_encode(array("result" => "Fail"));
     }
 }
 
-if ($role === 'doctor' && $method === 'update_thyroidUltraMass') {
+if ($role === 'หมอ' && $method === 'update_thyroidUltraMass') {
     $postdata = file_get_contents("php://input");
     $data = json_decode($postdata);
     $thy_ult_id = $data->thy_ult_id;
@@ -251,7 +270,7 @@ if ($role === 'doctor' && $method === 'update_thyroidUltraMass') {
     }
 }
 
-if ($role === 'doctor' && $method === 'delete_thyroidUltraMass') {
+if ($role === 'หมอ' && $method === 'delete_thyroidUltraMass') {
     $postdata = file_get_contents("php://input");
     $data = json_decode($postdata);
     $thy_ult_id = $data->thy_ult_id;
